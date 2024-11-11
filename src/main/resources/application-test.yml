@@ -17,12 +17,6 @@ spring:
     # for IntelliJ IDEA
     username : ${DB_USERNAME}
     password : ${DB_PASSWORD}
-
-    # for AWS
-    # username :  admin # root
-    # password :  A$dmin123
-
-
     platform : mysql
     initialization-mode : always
 
