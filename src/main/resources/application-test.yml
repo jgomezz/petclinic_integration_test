@@ -14,7 +14,7 @@ spring:
     # Windoows
     # url : jdbc:mysql://localhost:3306/PETCLINIC_DB?useSSL=false&serverTimezone=UTC
 
-    # for IntelliJ IDEA
+    # for test
     username : ${DB_USERNAME}
     password : ${DB_PASSWORD}
     platform : mysql
