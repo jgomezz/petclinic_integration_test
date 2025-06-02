@@ -57,3 +57,7 @@ logging :
 
 server :
   port : 8080
+
+email:
+  smtp:
+    server:
