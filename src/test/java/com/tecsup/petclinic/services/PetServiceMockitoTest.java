@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
@@ -23,14 +24,15 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 
 @Slf4j
-//@ExtendWith(MockitoExtension.class)
-@SpringBootTest
+@ExtendWith(MockitoExtension.class)
+// @SpringBootTest
 public class PetServiceMockitoTest {
 
-    @Autowired
-    private PetService petService;
+    //@Autowired
+    @InjectMocks
+    private PetServiceImpl petService;
 
-    @MockBean
+    @Mock
     private PetRepository repository;
 
     @BeforeEach

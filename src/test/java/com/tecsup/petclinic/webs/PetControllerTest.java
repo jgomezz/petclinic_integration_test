@@ -2,7 +2,7 @@ package com.tecsup.petclinic.webs;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jayway.jsonpath.JsonPath;
-import com.tecsup.petclinic.domain.PetTO;
+import com.tecsup.petclinic.dtos.PetDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,7 +58,7 @@ public class PetControllerTest {
 		int OWNER_ID = 1;
 		String BIRTH_DATE = "2000-09-07";
 
-		mockMvc.perform(get("/pets/1"))  // Object must be BASIL
+		this.mockMvc.perform(get("/pets/1"))  // Object must be BASIL
 				.andExpect(content().contentType(MediaType.APPLICATION_JSON))
 				.andDo(print())
 				.andExpect(status().isOk())
@@ -68,6 +68,7 @@ public class PetControllerTest {
 				.andExpect(jsonPath("$.ownerId", is(OWNER_ID)))
 				.andExpect(jsonPath("$.birthDate", is(BIRTH_DATE)));
 	}
+
 	/**
 	 * 
 	 * @throws Exception
@@ -91,13 +92,13 @@ public class PetControllerTest {
 		int OWNER_ID = 1;
 		String BIRTH_DATE = "2020-05-20";
 
-		PetTO newPetTO = new PetTO();
+		PetDTO newPetTO = new PetDTO();
 		newPetTO.setName(PET_NAME);
 		newPetTO.setTypeId(TYPE_ID);
 		newPetTO.setOwnerId(OWNER_ID);
 		newPetTO.setBirthDate(BIRTH_DATE);
 
-		mockMvc.perform(post("/pets")
+		this.mockMvc.perform(post("/pets")
 						.content(om.writeValueAsString(newPetTO))
 						.header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON))
 				.andDo(print())
@@ -123,7 +124,7 @@ public class PetControllerTest {
 		int OWNER_ID = 1;
 		String BIRTH_DATE = "2020-05-20";
 
-		PetTO newPetTO = new PetTO();
+		PetDTO newPetTO = new PetDTO();
 		newPetTO.setName(PET_NAME);
 		newPetTO.setTypeId(TYPE_ID);
 		newPetTO.setOwnerId(OWNER_ID);
@@ -167,7 +168,7 @@ public class PetControllerTest {
 		int UP_OWNER_ID = 2;
 		int UP_TYPE_ID = 2;
 
-		PetTO newPetTO = new PetTO();
+		PetDTO newPetTO = new PetDTO();
 		newPetTO.setName(PET_NAME);
 		newPetTO.setTypeId(TYPE_ID);
 		newPetTO.setOwnerId(OWNER_ID);
@@ -184,7 +185,7 @@ public class PetControllerTest {
 		Integer id = JsonPath.parse(response).read("$.id");
 
 		// UPDATE
-		PetTO upPetTO = new PetTO();
+		PetDTO upPetTO = new PetDTO();
 		upPetTO.setId(id);
 		upPetTO.setName(UP_PET_NAME);
 		upPetTO.setTypeId(UP_TYPE_ID);
