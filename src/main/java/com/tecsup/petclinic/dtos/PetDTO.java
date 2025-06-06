@@ -1,8 +1,5 @@
-package com.tecsup.petclinic.domain;
+package com.tecsup.petclinic.dtos;
 
-import java.util.Date;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,7 +14,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class PetTO {
+public class PetDTO {
 
 	private Integer id;
 	

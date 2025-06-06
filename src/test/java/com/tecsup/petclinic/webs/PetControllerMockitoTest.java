@@ -2,7 +2,7 @@ package com.tecsup.petclinic.webs;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jayway.jsonpath.JsonPath;
-import com.tecsup.petclinic.domain.PetTO;
+import com.tecsup.petclinic.dtos.PetDTO;
 import com.tecsup.petclinic.entities.Pet;
 import com.tecsup.petclinic.exception.PetNotFoundException;
 import com.tecsup.petclinic.mapper.PetMapper;
@@ -26,7 +26,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
 import java.util.List;
-import java.util.Optional;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -69,7 +68,7 @@ public class PetControllerMockitoTest {
 		int NRO_RECORD = 5;
 		int ID_FIRST_RECORD = 1;
 
-		List<PetTO> petTOs  = TObjectCreator.getAllPetTOs();
+		List<PetDTO> petTOs  = TObjectCreator.getAllPetTOs();
 
 		List<Pet> pets  = this.mapper.toPetList(petTOs);
 
@@ -94,7 +93,7 @@ public class PetControllerMockitoTest {
 	@Test
 	public void testFindPetOK() throws Exception {
 
-		PetTO petTO  = TObjectCreator.getPetTO();
+		PetDTO petTO  = TObjectCreator.getPetTO();
 
 		Pet pet  = this.mapper.toPet(petTO);
 
@@ -135,7 +134,7 @@ public class PetControllerMockitoTest {
 	@Test
 	public void testCreatePet() throws Exception {
 
-		PetTO newPetTO  = TObjectCreator.newPetTO();
+		PetDTO newPetTO  = TObjectCreator.newPetTO();
 
 		Pet newPet  = this.mapper.toPet(newPetTO);
 
@@ -165,7 +164,7 @@ public class PetControllerMockitoTest {
 
 		// ------------ Create ---------------
 
-		PetTO newPetTO  = TObjectCreator.newPetTOForDelete();
+		PetDTO newPetTO  = TObjectCreator.newPetTOForDelete();
 
 		Pet newPet  = this.mapper.toPet(newPetTO);
 

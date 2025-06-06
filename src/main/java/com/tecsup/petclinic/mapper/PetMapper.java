@@ -1,6 +1,6 @@
 package com.tecsup.petclinic.mapper;
 
-import com.tecsup.petclinic.domain.PetTO;
+import com.tecsup.petclinic.dtos.PetDTO;
 import com.tecsup.petclinic.entities.Pet;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -19,7 +19,7 @@ public interface PetMapper {
 
 	//@Mapping(target = "name", source = "name")
 	@Mapping(source = "birthDate", target = "birthDate")
-	Pet toPet(PetTO petTO);
+	Pet toPet(PetDTO petTO);
 
 	default Date stringToDate(String dateStr) {
 
@@ -35,7 +35,7 @@ public interface PetMapper {
 	}
 
 	@Mapping(source = "birthDate", target = "birthDate")
-	PetTO toPetTO(Pet pet);
+	PetDTO toPetTO(Pet pet);
 
 	default String dateToString(Date date) {
 
@@ -48,9 +48,9 @@ public interface PetMapper {
 
 	}
 
-	List<PetTO> toPetTOList(List<Pet> petList);
+	List<PetDTO> toPetTOList(List<Pet> petList);
 
-	List<Pet> toPetList(List<PetTO> petTOList);
+	List<Pet> toPetList(List<PetDTO> petTOList);
 
 
 }
