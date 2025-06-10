@@ -9,14 +9,16 @@ import org.springframework.stereotype.Service;
 import com.tecsup.petclinic.entities.Pet;
 import com.tecsup.petclinic.exception.PetNotFoundException;
 import com.tecsup.petclinic.repositories.PetRepository;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * 
  * @author jgomezm
  *
  */
-@Service
 @Slf4j
+@Service
+@Transactional
 public class PetServiceImpl implements PetService {
 
 
