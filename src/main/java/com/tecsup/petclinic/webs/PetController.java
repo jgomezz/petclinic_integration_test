@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tecsup.petclinic.entities.Pet;
-import com.tecsup.petclinic.exception.PetNotFoundException;
+import com.tecsup.petclinic.exceptions.PetNotFoundException;
 import com.tecsup.petclinic.services.PetService;
 
 import java.util.List;
@@ -59,7 +59,7 @@ public class PetController {
 		log.info("pets: " + pets);
 		pets.forEach(item -> log.info("Pet >>  {} ", item));
 
-		List<PetDTO> petsTO = this.mapper.toPetTOList(pets);
+		List<PetDTO> petsTO = this.mapper.mapToDtoList(pets);
 		log.info("petsTO: " + petsTO);
 		petsTO.forEach(item -> log.info("PetTO >>  {} ", item));
 
@@ -78,8 +78,8 @@ public class PetController {
 	@ResponseStatus(HttpStatus.CREATED)
 	ResponseEntity<PetDTO> create(@RequestBody PetDTO petTO) {
 
-		Pet newPet = this.mapper.toPet(petTO);
-		PetDTO newPetTO = this.mapper.toPetTO(petService.create(newPet));
+		//Pet newPet = this.mapper.mapToEntity(petTO);
+		PetDTO newPetTO = petService.create(petTO);
 
 		return  ResponseEntity.status(HttpStatus.CREATED).body(newPetTO);
 
@@ -96,16 +96,15 @@ public class PetController {
 	@GetMapping(value = "/pets/{id}")
 	ResponseEntity<PetDTO> findById(@PathVariable Integer id) {
 
-		PetDTO petTO = null;
+		PetDTO petDto = null;
 
 		try {
-			Pet pet = petService.findById(id);
-			petTO = this.mapper.toPetTO(pet);
+            petDto = petService.findById(id);
 
 		} catch (PetNotFoundException e) {
 			return ResponseEntity.notFound().build();
 		}
-		return ResponseEntity.ok(petTO);
+		return ResponseEntity.ok(petDto);
 	}
 
 	/**
@@ -118,25 +117,23 @@ public class PetController {
 	@PutMapping(value = "/pets/{id}")
 	ResponseEntity<PetDTO>  update(@RequestBody PetDTO petTO, @PathVariable Integer id) {
 
-		PetDTO updatePetTO = null;
+		PetDTO updatePetDto = null;
 
 		try {
 
-			Pet updatePet = petService.findById(id);
+            updatePetDto = petService.findById(id);
 
-			updatePet.setName(petTO.getName());
-			updatePet.setOwnerId(petTO.getOwnerId());
-			updatePet.setTypeId(petTO.getTypeId());
+            updatePetDto.setName(petTO.getName());
+            updatePetDto.setOwnerId(petTO.getOwnerId());
+            updatePetDto.setTypeId(petTO.getTypeId());
 
-			petService.update(updatePet);
-
-			updatePetTO = this.mapper.toPetTO(updatePet);
+			petService.update(updatePetDto);
 
 		} catch (PetNotFoundException e) {
 			return ResponseEntity.notFound().build();
 		}
 
-		return ResponseEntity.ok(updatePetTO);
+		return ResponseEntity.ok(updatePetDto);
 	}
 
 	/**

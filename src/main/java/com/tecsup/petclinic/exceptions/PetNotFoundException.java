@@ -1,4 +1,4 @@
-package com.tecsup.petclinic.exception;
+package com.tecsup.petclinic.exceptions;
 
 /**
  * 

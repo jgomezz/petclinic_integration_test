@@ -2,6 +2,7 @@ package com.tecsup.petclinic.mapper;
 
 import com.tecsup.petclinic.dtos.PetDTO;
 import com.tecsup.petclinic.entities.Pet;
+import lombok.extern.slf4j.Slf4j;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.NullValueMappingStrategy;
@@ -12,6 +13,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+
 @Mapper(componentModel = "spring", nullValueMappingStrategy =  NullValueMappingStrategy.RETURN_DEFAULT)
 public interface PetMapper {
 
@@ -19,23 +21,27 @@ public interface PetMapper {
 
 	//@Mapping(target = "name", source = "name")
 	@Mapping(source = "birthDate", target = "birthDate")
-	Pet toPet(PetDTO petTO);
+	Pet mapToEntity(PetDTO petTO);
 
-	default Date stringToDate(String dateStr) {
+    default Date stringToDate(String dateStr) {
+        System.out.println("Converting string to date: " + dateStr);
 
-		Date date = null;
-		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-		try {
-			date = dateFormat.parse(dateStr);
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
+        if (dateStr == null || dateStr.isEmpty()) {
+            return null;
+        }
 
-		return date;
+        Date date = null;
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            date = dateFormat.parse(dateStr);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return date;
 	}
 
 	@Mapping(source = "birthDate", target = "birthDate")
-	PetDTO toPetTO(Pet pet);
+	PetDTO mapToDto(Pet pet);
 
 	default String dateToString(Date date) {
 
@@ -48,9 +54,9 @@ public interface PetMapper {
 
 	}
 
-	List<PetDTO> toPetTOList(List<Pet> petList);
+	List<PetDTO> mapToDtoList(List<Pet> petList);
 
-	List<Pet> toPetList(List<PetDTO> petTOList);
+    List<Pet> mapToEntityList(List<PetDTO> petTOList);
 
 
 }
