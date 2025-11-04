@@ -38,8 +38,7 @@ public class PetControllerTest {
 
 		this.mockMvc.perform(get("/pets"))
 				.andExpect(status().isOk())
-				.andExpect(content()
-				.contentType(MediaType.APPLICATION_JSON_VALUE))
+				.andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
 				//		    .andExpect(jsonPath("$", hasSize(NRO_RECORD)))
 				.andExpect(jsonPath("$[0].id", is(ID_FIRST_RECORD)));
 	}
