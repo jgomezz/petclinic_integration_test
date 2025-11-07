@@ -13,7 +13,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
- * 
+ *
  * @author jgomezm
  *
  */
@@ -21,129 +21,129 @@ import java.util.stream.Collectors;
 @Slf4j
 public class PetServiceImpl implements PetService {
 
-	PetRepository petRepository;
-	PetMapper petMapper;
+    PetRepository petRepository;
+    PetMapper petMapper;
 
-	public PetServiceImpl (PetRepository petRepository, PetMapper petMapper) {
-		this.petRepository = petRepository;
-		this.petMapper = petMapper;
-	}
-
-
-	/**
-	 * 
-	 * @param petDTO
-	 * @return
-	 */
-	@Override
-	public PetDTO create(PetDTO petDTO) {
-
-		Pet newPet = petRepository.save(petMapper.mapToEntity(petDTO));
-
-		return petMapper.mapToDto(newPet);
-	}
-
-	/**
-	 * 
-	 * @param petDTO
-	 * @return
-	 */
-	@Override
-	public PetDTO update(PetDTO petDTO) {
-
-		Pet newPet = petRepository.save(petMapper.mapToEntity(petDTO));
-
-		return petMapper.mapToDto(newPet);
-
-	}
+    public PetServiceImpl (PetRepository petRepository, PetMapper petMapper) {
+        this.petRepository = petRepository;
+        this.petMapper = petMapper;
+    }
 
 
-	/**
-	 * 
-	 * @param id
-	 * @throws PetNotFoundException
-	 */
-	@Override
-	public void delete(Integer id) throws PetNotFoundException{
+    /**
+     *
+     * @param petDTO
+     * @return
+     */
+    @Override
+    public PetDTO create(PetDTO petDTO) {
 
-		PetDTO pet = findById(id);
+        Pet newPet = petRepository.save(petMapper.mapToEntity(petDTO));
 
-		petRepository.delete(this.petMapper.mapToEntity(pet));
+        return petMapper.mapToDto(newPet);
+    }
 
-	}
+    /**
+     *
+     * @param petDTO
+     * @return
+     */
+    @Override
+    public PetDTO update(PetDTO petDTO) {
 
-	/**
-	 * 
-	 * @param id
-	 * @return
-	 */
-	@Override
-	public PetDTO findById(Integer id) throws PetNotFoundException {
+        Pet newPet = petRepository.save(petMapper.mapToEntity(petDTO));
 
-		Optional<Pet> pet = petRepository.findById(id);
+        return petMapper.mapToDto(newPet);
 
-		if ( !pet.isPresent())
-			throw new PetNotFoundException("Record not found...!");
+    }
 
-		return this.petMapper.mapToDto(pet.get());
-	}
 
-	/**
-	 * 
-	 * @param name
-	 * @return
-	 */
-	@Override
-	public List<PetDTO> findByName(String name) {
+    /**
+     *
+     * @param id
+     * @throws PetNotFoundException
+     */
+    @Override
+    public void delete(Integer id) throws PetNotFoundException{
 
-		List<Pet> pets = petRepository.findByName(name);
+        PetDTO pet = findById(id);
 
-		pets.forEach(pet -> log.info("" + pet));
+        petRepository.delete(this.petMapper.mapToEntity(pet));
 
-		return pets
-				.stream()
-				.map(this.petMapper::mapToDto)
-				.collect(Collectors.toList());
-	}
+    }
 
-	/**
-	 * 
-	 * @param typeId
-	 * @return
-	 */
-	@Override
-	public List<Pet> findByTypeId(int typeId) {
+    /**
+     *
+     * @param id
+     * @return
+     */
+    @Override
+    public PetDTO findById(Integer id) throws PetNotFoundException {
 
-		List<Pet> pets = petRepository.findByTypeId(typeId);
+        Optional<Pet> pet = petRepository.findById(id);
 
-		pets.forEach(pet -> log.info("" + pet));
+        if ( !pet.isPresent())
+            throw new PetNotFoundException("Record not found...!");
 
-		return pets; 
-	}
+        return this.petMapper.mapToDto(pet.get());
+    }
 
-	/**
-	 * 
-	 * @param ownerId
-	 * @return
-	 */
-	@Override
-	public List<Pet> findByOwnerId(int ownerId) {
+    /**
+     *
+     * @param name
+     * @return
+     */
+    @Override
+    public List<PetDTO> findByName(String name) {
 
-		List<Pet> pets = petRepository.findByOwnerId(ownerId);
+        List<Pet> pets = petRepository.findByName(name);
 
-		pets.forEach(pet -> log.info("" + pet));
+        pets.forEach(pet -> log.info("" + pet));
 
-		return pets;
-	}
+        return pets
+                .stream()
+                .map(this.petMapper::mapToDto)
+                .collect(Collectors.toList());
+    }
 
-	/**
-	 *
-	 * @return
-	 */
-	@Override
-	public List<Pet> findAll() {
-		//
-		return petRepository.findAll();
+    /**
+     *
+     * @param typeId
+     * @return
+     */
+    @Override
+    public List<Pet> findByTypeId(int typeId) {
 
-	}
+        List<Pet> pets = petRepository.findByTypeId(typeId);
+
+        pets.forEach(pet -> log.info("" + pet));
+
+        return pets;
+    }
+
+    /**
+     *
+     * @param ownerId
+     * @return
+     */
+    @Override
+    public List<Pet> findByOwnerId(int ownerId) {
+
+        List<Pet> pets = petRepository.findByOwnerId(ownerId);
+
+        pets.forEach(pet -> log.info("" + pet));
+
+        return pets;
+    }
+
+    /**
+     *
+     * @return
+     */
+    @Override
+    public List<Pet> findAll() {
+        //
+        return petRepository.findAll();
+
+    }
 }
