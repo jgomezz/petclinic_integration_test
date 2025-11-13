@@ -1,8 +1,6 @@
 package com.tecsup.petclinic.webs;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.jayway.jsonpath.JsonPath;
-import com.tecsup.petclinic.dtos.VetSpecialtyDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
@@ -13,7 +11,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.ResultActions;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -37,12 +34,6 @@ public class VetSpecialtyControllerTest {
     private static Long vetId = 1L;       // Suponiendo que ya existen
     private static Long specialtyId = 1L; // valores válidos en la BD
 
-    private static Long createdVetId;
-    private static Long createdSpecialtyId;
-
-    /**
-     * Test to create a new vet-specialty relationship (OK case)
-     */
 
     /**
      * Test to find the created vet-specialty (OK case)
@@ -70,12 +61,36 @@ public class VetSpecialtyControllerTest {
     }
 
 
+    /**
+     *Get specialties for a vet that doesn't exist
+     */
+    @Test
+    @Order(4)
+    public void testFindByVetIdKO() throws Exception {
+        mockMvc.perform(get("/vet-specialties/vet/999"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$").isEmpty());
+    }
+
+    /**
+     *  Get vets for a specialty that doesn't exist
+     */
+    @Test
+    @Order(5)
+    public void testFindBySpecialtyIdKO() throws Exception {
+        mockMvc.perform(get("/vet-specialties/specialty/999"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$").isEmpty());
+    }
+
 
     /**
      * Test to delete an existing vet-specialty (OK case)
      */
     @Test
-    @Order(5)
+    @Order(6)
     public void testDeleteVetSpecialtyOK() throws Exception {
         mockMvc.perform(delete("/vet-specialties/{vetId}/{specialtyId}", vetId, specialtyId))
                 .andDo(print())
@@ -86,10 +101,11 @@ public class VetSpecialtyControllerTest {
      * Test to delete a non-existent vet specialty (KO case)
      */
     @Test
-    @Order(6)
+    @Order(7)
     public void testDeleteVetSpecialtyKO() throws Exception {
         mockMvc.perform(delete("/vet-specialties/999/999"))
                 .andDo(print())
                 .andExpect(status().isNotFound());
     }
+
 }
