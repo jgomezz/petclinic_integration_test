@@ -83,6 +83,37 @@ class VisitServiceTest {
         verify(visitRepository, times(1)).save(updatedVisit);
     }
 
+    @Test
+    void testFindVisitById() {
+
+        Visit visit = new Visit();
+        visit.setId(1L);
+        visit.setDescription("Consulta general");
+
+        when(visitRepository.findById(1L)).thenReturn(Optional.of(visit));
+
+        Visit result = visitService.findVisitById(1L);
+
+        assertNotNull(result);
+        assertEquals(1L, result.getId());
+        assertEquals("Consulta general", result.getDescription());
+        verify(visitRepository, times(1)).findById(1L);
+    }
+
+    @Test
+    void testDeleteVisit() {
+
+        Long id = 1L;
+
+        doNothing().when(visitRepository).deleteById(id);
+
+        visitService.deleteVisit(id);
+
+        verify(visitRepository, times(1)).deleteById(id);
+    }
+
+
+
 
 
 }
