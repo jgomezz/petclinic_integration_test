@@ -12,6 +12,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
@@ -62,9 +63,26 @@ class VisitServiceTest {
         verify(visitRepository, times(1)).findAll();
     }
 
+    @Test
+    void testUpdateVisit() {
+
+        Visit existingVisit = new Visit();
+        existingVisit.setId(1L);
+        existingVisit.setDescription("Consulta general");
+
+        Visit updatedVisit = new Visit();
+        updatedVisit.setId(1L);
+        updatedVisit.setDescription("Consulta actualizada");
+
+        when(visitRepository.save(any(Visit.class))).thenReturn(updatedVisit);
+
+        Visit result = visitService.saveVisit(updatedVisit);
+
+        assertNotNull(result);
+        assertEquals("Consulta actualizada", result.getDescription());
+        verify(visitRepository, times(1)).save(updatedVisit);
+    }
+
+
 
 }
-// asdadas cambiando todo
-
-
-//hola
